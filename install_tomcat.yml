@@ -1,0 +1,29 @@
+---
+- name: install tomcat
+  hosts: all
+  bcome: true
+   tasks:
+     - name: tomact installation
+       ansible.builtin.get_url:
+         url: "https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.108/bin/apache-tomcat-9.0.108.zip"
+         dest: "/home/ubuntu/"
+     - name: Install unzip
+       become: yes
+       ansible.builtin.package:
+         name: unzip
+         state: present
+     - name: unzip the packehe
+       ansible.builtin.unarchive:
+         src: "/home/ubuntu/apache-tomcat-9.0.108.zip"
+         dest: "/home/ubuntu/"
+         remote_src: yes
+     - name: Make .sh files executable
+       ansible.builtin.file:
+         path: "/home/ubuntu/apache-tomcat-9.0.108"
+         mode: '0755'
+         recurse: yes
+     - name: start Tomcat
+       ansible.builtin.shell: ./startup.sh
+       args:
+         chdir: "/home/ubuntu/apache-tomcat-9.0.108/bin"
+
