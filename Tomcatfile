@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('cloning github repo') {
+            steps {
+                git 'https://github.com/Tejaaviti/Tomcat-ansible'
+                echo 'Clonning....'
+            }
+        }
+        stage('Run Ansible Playbook'){
+            steps{
+                ansiblePlaybook credentialsId: 'asnibel-ssh', disableHostKeyChecking: true, installation: 'apache2', inventory: 'inventory.ini', playbook: 'install_tomcat.yml', vaultTmpPath: ''
+            }
+        }
+    }
+}
