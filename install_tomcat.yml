@@ -1,7 +1,7 @@
 ---
 - name: install tomcat
   hosts: all
-  bcome: true
+  become: true
   tasks:
     - name: tomact installation
       ansible.builtin.get_url:
@@ -12,7 +12,7 @@
       ansible.builtin.package:
         name: unzip
         state: present
-    - name: unzip the packehe
+    - name: unzip the package
       ansible.builtin.unarchive:
         src: "/home/ubuntu/apache-tomcat-9.0.108.zip"
         dest: "/home/ubuntu/"
